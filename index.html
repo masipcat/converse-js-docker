@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <link rel="stylesheet" type="text/css" media="screen" href="/static/css/converse.min.css">
+ <script src="3rdparty/libsignal-protocol.js"></script>
+ <script src="/static/dist/converse.min.js"></script>
+</head>
+<body>
+</body>
+  <script>
+    converse.initialize({
+        bosh_service_url: '$BOSCH_SERVICE_URL',
+        view_mode: 'fullscreen',
+        muc_show_join_leave: false,
+        auto_away: 300,
+        auto_reconnect: true,
+        message_archiving: 'always'
+    });
+  </script>
+</html>
+
