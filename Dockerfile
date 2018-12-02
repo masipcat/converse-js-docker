@@ -1,16 +1,15 @@
-FROM node:10.11-alpine
+FROM node:10.14-alpine
 
 ARG VERSION
 
-RUN apk update && apk add make git ruby ruby-dev g++ libffi-dev wget
+RUN apk update && apk add make git ruby ruby-dev g++ libffi-dev wget zip
 
 WORKDIR /
 
-RUN git clone https://github.com/conversejs/converse.js.git converse.js
+RUN git clone -b "${VERSION}" --single-branch --depth 1 https://github.com/conversejs/converse.js.git converse.js
 
 WORKDIR /converse.js
 
-RUN git checkout ${VERSION}
 RUN gem install rdoc; echo
 RUN gem install ffi
 RUN make dist
@@ -22,7 +21,7 @@ RUN apk update && apk add gettext
 RUN mkdir -p /app/static
 
 COPY entrypoint.sh /
-COPY index.html /app/
+COPY index_template.html /app/
 COPY --from=0 /converse.js/dist/ /app/static/dist/
 COPY --from=0 /converse.js/css/ /app/static/css/
 COPY --from=0 /converse.js/3rdparty/ /app/3rdparty/
