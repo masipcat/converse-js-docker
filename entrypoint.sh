@@ -1,2 +1,2 @@
 envsubst < /app/index_template.html > /app/index.html
-python -m http.server
+/go_static -path /app -port 8000

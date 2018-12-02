@@ -1,4 +1,4 @@
-FROM node:10.14-alpine
+FROM node:10.14-alpine as builder
 
 ARG VERSION
 
@@ -15,17 +15,19 @@ RUN gem install ffi
 RUN make dist
 RUN cd 3rdparty && wget https://github.com/signalapp/libsignal-protocol-javascript/raw/master/dist/libsignal-protocol.js
 
-FROM python:3.7-alpine3.8
+FROM pierrezemb/gostatic as gostatic
 
-RUN apk update && apk add gettext
-RUN mkdir -p /app/static
+FROM alpine:3.8
 
+RUN apk add --no-cache gettext
+
+COPY --from=gostatic /goStatic /go_static
 COPY entrypoint.sh /
 COPY index_template.html /app/
-COPY --from=0 /converse.js/dist/ /app/static/dist/
-COPY --from=0 /converse.js/css/ /app/static/css/
-COPY --from=0 /converse.js/3rdparty/ /app/3rdparty/
-COPY --from=0 /converse.js/locale/ /app/locale/
+COPY --from=builder /converse.js/dist/converse.min.js /app/static/dist/converse.min.js
+COPY --from=builder /converse.js/css/ /app/static/css/
+COPY --from=builder /converse.js/3rdparty/ /app/3rdparty/
+COPY --from=builder /converse.js/locale/ /app/locale/
 
 WORKDIR /app
 
