@@ -13,7 +13,7 @@ WORKDIR /converse.js
 RUN gem install rdoc; echo
 RUN gem install ffi
 RUN make dist
-RUN cd 3rdparty && wget https://github.com/signalapp/libsignal-protocol-javascript/raw/master/dist/libsignal-protocol.js
+RUN mkdir 3rdparty && cd 3rdparty && wget https://github.com/signalapp/libsignal-protocol-javascript/raw/master/dist/libsignal-protocol.js
 
 FROM pierrezemb/gostatic as gostatic
 
