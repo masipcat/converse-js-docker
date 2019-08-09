@@ -24,8 +24,7 @@ RUN apk add --no-cache gettext
 COPY --from=gostatic /goStatic /go_static
 COPY entrypoint.sh /
 COPY index_template.html /app/
-COPY --from=builder /converse.js/dist/converse.min.js /app/static/dist/converse.min.js
-COPY --from=builder /converse.js/css/ /app/static/css/
+COPY --from=builder /converse.js/dist/ /app/static/dist/
 COPY --from=builder /converse.js/3rdparty/ /app/3rdparty/
 COPY --from=builder /converse.js/locale/ /app/locale/
 

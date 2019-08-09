@@ -14,11 +14,10 @@ Using docker-compose:
 version: "3.3"
 services:
   converse:
-    image: masipcat/conversejs:4.2.0
+    image: masipcat/conversejs:5.0.0
     ports:
       - 8000:8000
     environment:
-      - BOSCH_SERVICE_URL=https://xmpp.example.com/bosh/
       - WS_SERVICE_URL=wss://xmpp.example.com/ws/
     restart: always
 ```
@@ -26,5 +25,5 @@ services:
 ## Build
 
 ```console
-docker build -t conversejs --build-arg VERSION=v4.2.0 .
+docker build -t conversejs --build-arg VERSION=v5.0.0 .
 ```
